@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Veda - Advanced Ayurvedic Formula</title>
+    <link rel="stylesheet" href="custom.css">
+    <style>
+        .reviews-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #f9f9f9 0%, #eef2f3 100%);
+        }
+        .reviews-title {
+            text-align: center;
+            font-size: 2.8rem;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .reviews-subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 60px;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .review-card {
+            background: #fff;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #fff;
+            border-left: 5px solid #27ae60;
+            position: relative;
+            overflow: hidden;
+        }
+        .review-card::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            font-size: 100px;
+            color: #f0f0f0;
+            font-family: serif;
+            z-index: 0;
+        }
+        .review-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .avatar-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 25px;
+            border: 4px solid #fff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .review-body { flex: 1; position: relative; z-index: 1; }
+        .user-name { margin: 0; font-size: 1.1rem; font-weight: 700; color: #333; }
+        .user-city { font-size: 0.85rem; color: #888; margin-bottom: 5px; display: block; }
+        .stars { color: #f1c40f; margin-bottom: 10px; font-size: 1rem; }
+        .review-text { font-style: italic; color: #444; margin-bottom: 10px; line-height: 1.6; font-size: 1.05rem; }
+        .verified-badge { color: #27ae60; font-size: 0.8rem; font-weight: 600; display: flex; align-items: center; }
+        .verified-badge span { margin-left: 5px; }
+        
+        @media (max-width: 768px) {
+            .reviews-grid { grid-template-columns: 1fr; }
+            .review-card { flex-direction: column; text-align: center; border-left: none; border-top: 5px solid #27ae60; }
+            .avatar-img { margin-right: 0; margin-bottom: 15px; }
+            .verified-badge { justify-content: center; }
+        }
+
+        /* Product Gallery Styles */
+        .product-gallery {
+            padding: 60px 0;
+            background: #fff;
+        }
+        .gallery-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 40px;
+            font-weight: 700;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .gallery-item {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            height: 300px;
+        }
+        .gallery-item:hover { transform: scale(1.03); }
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .gallery-img.contain {
+            object-fit: contain;
+            background: #fdfdfd;
+            padding: 20px;
+        }
+
+        /* Product Features Section */
+        .product-features {
+            padding: 60px 0;
+            background-color: #fff;
+        }
+        .feature-flex {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            text-align: left;
+        }
+        .feature-img-box {
+            flex: 1;
+            text-align: center;
+        }
+        .feature-img-box img {
+            max-width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            background: #fff;
+            padding: 20px;
+            border: 1px solid #eee;
+            transition: transform 0.3s ease;
+        }
+        .feature-img-box img:hover { transform: scale(1.02); }
+        .feature-content {
+            flex: 1;
+        }
+        .feature-content h2 {
+            font-size: 2.2rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        .feature-content p {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 25px;
+            line-height: 1.7;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        .feature-list li {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            color: #333;
+            display: flex;
+            align-items: flex-start;
+        }
+        .feature-list li strong {
+            color: #cf2e2e;
+            margin-right: 5px;
+        }
+        .feature-list li::before {
+            content: '✔';
+            color: #28a745;
+            font-weight: bold;
+            margin-right: 15px;
+            font-size: 1.2rem;
+            margin-top: 2px;
+        }
+        
+        @media (max-width: 768px) {
+            .feature-flex { flex-direction: column; }
+            .feature-content { text-align: center; }
+            .feature-list li { justify-content: flex-start; text-align: left; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="container header-flex">
+            <img src="https://srishi.shop/wp-content/uploads/2025/11/logo.png" alt="Logo" class="logo">
+            <h2 class="auth-text">National Health Authority <br><span>Government of India</span></h2>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1 class="main-title">India’s Top Selling Health Veda Capsule</h1>
+            <p class="hindi-subtitle">भारत का एकमात्र सबसे भरोसेमंद दवाई। 100% आयुर्वेदिक फॉर्मूला।</p>
+            
+            <div class="product-showcase">
+                <img src="WhatsApp Image 2026-01-31 at 5.19.02 PM.jpeg" alt="Product" class="product-img">
+            </div>
+
+            <div class="benefits-box">
+                <h2>Benefits: Size + Stamina + Timing</h2>
+                <p>Free Shipping + Cash on Delivery</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing">
+        <div class="container price-flex">
+            <div class="old-price">₹5,000/-</div>
+            <div class="new-price">Offer Price ₹2500/-</div>
+        </div>
+        <div class="container">
+            <a href="#contact-form" class="cta-button">ORDER NOW</a>
+        </div>
+    </section>
+
+    <section class="details">
+        <div class="container">
+            <h2 class="highlight-text">100% सुरक्षित और प्रभावी</h2>
+            <p>Health Veda Capsule पुरुष सेक्स हॉरमोन बढ़ाना उत्प्रेरित करता है और शरीर में रक्त प्रवाह भी बढ़ाता है।</p>
+        </div>
+    </section>
+
+    <section class="product-features">
+        <div class="container feature-flex">
+            <div class="feature-img-box">
+                <img src="1.jpeg" alt="Health Veda Bottle">
+            </div>
+            <div class="feature-content">
+                <h2>संपूर्ण स्वास्थ्य का रक्षक</h2>
+                <p>Health Veda सिर्फ एक कैप्सूल नहीं, बल्कि एक संपूर्ण स्वास्थ्य समाधान है। यह आपके शरीर को भीतर से मजबूत बनाता है और रोगों से लड़ने की क्षमता बढ़ाता है।</p>
+                <ul class="feature-list">
+                    <li><strong>इम्युनिटी बूस्टर:</strong> रोग प्रतिरोधक क्षमता को बढ़ाता है।</li>
+                    <li><strong>पाचन में सुधार:</strong> पेट की समस्याओं को दूर रखता है।</li>
+                    <li><strong>समग्र कल्याण:</strong> शरीर और मन दोनों को स्वस्थ रखता है।</li>
+                    <li><strong>प्राकृतिक डिटॉक्स:</strong> शरीर से विषैले पदार्थों को बाहर निकालता है।</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="product-features">
+        <div class="container feature-flex">
+            <div class="feature-img-box">
+                <img src="2.jpeg" alt="Health Veda Bottle">
+            </div>
+            <div class="feature-content">
+                <h2>असली शिलाजीत की शक्ति</h2>
+                <p>इसमें मौजूद शुद्ध शिलाजीत और अश्वगंधा आपकी मांसपेशियों को मजबूत बनाते हैं और कमजोरी को जड़ से मिटाते हैं। यह पौरुष शक्ति का एक बेजोड़ स्रोत है।</p>
+                <ul class="feature-list">
+                    <li><strong>मांसपेशियों की ताकत:</strong> शरीर को सुडौल और मजबूत बनाता है।</li>
+                    <li><strong>शुद्ध शिलाजीत:</strong> हिमालय की गोद से निकला असली शिलाजीत।</li>
+                    <li><strong>प्राकृतिक शक्ति:</strong> बिना किसी स्टेरॉयड के असली ताकत।</li>
+                    <li><strong>जोड़ों का दर्द:</strong> हड्डियों और जोड़ों को मजबूती देता है।</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="product-features">
+        <div class="container feature-flex">
+            <div class="feature-img-box">
+                <img src="5.jpeg" alt="Health Veda Bottle">
+            </div>
+            <div class="feature-content">
+                <h2>थकान को कहें अलविदा</h2>
+                <p>क्या आप जल्दी थक जाते हैं? Health Veda का विशेष फॉर्मूला आपकी ऊर्जा के स्तर को दिन भर बनाए रखता है, चाहे आप ऑफिस में हों या खेल के मैदान में।</p>
+                <ul class="feature-list">
+                    <li><strong>उच्च ऊर्जा स्तर:</strong> सुस्ती और आलस को दूर भगाएं।</li>
+                    <li><strong>सक्रिय जीवनशैली:</strong> पूरे दिन चुस्त और दुरुस्त रहें।</li>
+                    <li><strong>रिकवरी:</strong> काम के बाद की थकान को तुरंत मिटाए।</li>
+                    <li><strong>फोकस:</strong> काम में मन लगाने में मदद करता है।</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="product-features">
+        <div class="container feature-flex">
+            <div class="feature-img-box">
+                <img src="4.jpeg" alt="Health Veda Bottle">
+            </div>
+            <div class="feature-content">
+                <h2>मानसिक शांति और आत्मविश्वास</h2>
+                <p>शारीरिक स्वास्थ्य के साथ-साथ मानसिक स्वास्थ्य भी जरूरी है। यह तनाव को कम करता है और आपके आत्मविश्वास को नई ऊंचाइयों पर ले जाता है।</p>
+                <ul class="feature-list">
+                    <li><strong>तनाव मुक्त:</strong> कोर्टिसोल लेवल को नियंत्रित करता है।</li>
+                    <li><strong>आत्मविश्वास:</strong> भीड़ में भी अलग पहचान बनाएं।</li>
+                    <li><strong>बेहतर नींद:</strong> अनिद्रा की समस्या को दूर करता है।</li>
+                    <li><strong>मूड लिफ्टर:</strong> चिड़चिड़ापन दूर कर खुशहाली लाता है।</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="product-features">
+        <div class="container feature-flex">
+            <div class="feature-img-box">
+                <img src="6.jpeg" alt="Health Veda Bottle">
+            </div>
+            <div class="feature-content">
+                <h2>वैज्ञानिक रूप से तैयार</h2>
+                <p>हमारे विशेषज्ञों ने प्राचीन आयुर्वेद के ज्ञान और आधुनिक विज्ञान की तकनीक को मिलाकर यह अद्वितीय फॉर्मूला तैयार किया है, जो पूरी तरह से सुरक्षित है।</p>
+                <ul class="feature-list">
+                    <li><strong>लैब टेस्टेड:</strong> हर बैच की कड़ाई से जांच होती है।</li>
+                    <li><strong>विशेषज्ञ स्वीकृत:</strong> हेल्थ एक्सपर्ट्स द्वारा अनुशंसित।</li>
+                    <li><strong>प्रीमियम गुणवत्ता:</strong> सर्वोत्तम सामग्री का उपयोग।</li>
+                    <li><strong>जीएमपी प्रमाणित:</strong> निर्माण की उच्चतम गुणवत्ता।</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+     <section class="product-features">
+        <div class="container feature-flex">
+            <div class="feature-img-box">
+                <img src="7.jpeg" alt="Health Veda Bottle">
+            </div>
+            <div class="feature-content">
+                <h2>भरोसा 50,000+ ग्राहकों का</h2>
+                <p>पूरे भारत में हजारों पुरुषों ने Health Veda पर भरोसा किया है और इसके सकारात्मक परिणाम देखे हैं। यह सिर्फ एक प्रोडक्ट नहीं, एक विश्वास है।</p>
+                <ul class="feature-list">
+                    <li><strong>विश्वसनीय ब्रांड:</strong> सालों से ग्राहकों की पहली पसंद।</li>
+                    <li><strong>असली परिणाम:</strong> जो कहा, वो करके दिखाया।</li>
+                    <li><strong>उच्च संतुष्टि:</strong> 98% ग्राहक दोबारा ऑर्डर करते हैं।</li>
+                    <li><strong>सकारात्मक समीक्षा:</strong> हजारों 5-स्टार रेटिंग्स।</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+     <section class="product-features">
+        <div class="container feature-flex">
+            <div class="feature-img-box">
+                <img src="8.jpeg" alt="Health Veda Bottle">
+            </div>
+            <div class="feature-content">
+                <h2>सुखी दांपत्य जीवन</h2>
+                <p>अपने साथी के साथ रिश्तों को और भी मजबूत बनाएं। एक स्वस्थ शरीर ही एक खुशहाल जीवन और मजबूत रिश्तों की नींव है।</p>
+                <ul class="feature-list">
+                    <li><strong>बेहतर रिश्ते:</strong> अपने पार्टनर के साथ खुशियां बांटें।</li>
+                    <li><strong>नई उमंग:</strong> जीवन में रोमांस और ताजगी लाएं।</li>
+                    <li><strong>क्वालिटी टाइम:</strong> परिवार के साथ अच्छा समय बिताएं।</li>
+                    <li><strong>खुशहाली:</strong> तनावमुक्त और आनंदमय जीवन।</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+     <section class="product-features">
+        <div class="container feature-flex">
+            <div class="feature-img-box">
+                <img src="9.jpeg" alt="Health Veda Bottle">
+            </div>
+            <div class="feature-content">
+                <h2>आसान और गोपनीय डिलीवरी</h2>
+                <p>हम आपकी गोपनीयता का सम्मान करते हैं। प्रोडक्ट की पैकिंग पूरी तरह से गोपनीय होती है और डिलीवरी बहुत तेज है।</p>
+                <ul class="feature-list">
+                    <li><strong>गोपनीय पैकिंग:</strong> किसी को पता नहीं चलेगा कि अंदर क्या है।</li>
+                    <li><strong>तेज डिलीवरी:</strong> भारत के हर कोने में उपलब्ध।</li>
+                    <li><strong>कैश ऑन डिलीवरी:</strong> सामान मिलने पर पैसे दें।</li>
+                    <li><strong>आसान ऑर्डर:</strong> बस एक क्लिक में बुक करें।</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact-form" class="order-section">
+        <div class="container">
+            <h3>Place Your Order</h3>
+            <form id="leadForm">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" placeholder="अपना पूरा नाम लिखे" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" placeholder="अपना 10 अंको का फ़ोन नंबर" required>
+                </div>
+                <div class="form-group">
+                    <label>Address</label>
+                    <textarea placeholder="अपना पूरा पता भरिये" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">CONFIRM ORDER</button>
+            </form>
+        </div>
+    </section>
+
+    <section class="reviews-section">
+        <div class="container">
+            <h2 class="reviews-title">हमारे खुश ग्राहक क्या कहते हैं</h2>
+            <p class="reviews-subtitle">Real Results from Real People • 50,000+ संतुष्ट ग्राहक</p>
+            
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <img src="https://randomuser.me/api/portraits/men/71.jpg" alt="Rajesh Kumar" class="avatar-img">
+                    <div class="review-body">
+                        <h3 class="user-name">राजेश कुमार</h3>
+                        <span class="user-city">मुंबई</span>
+                        <div class="stars">★★★★★</div>
+                        <p class="review-text">"शुरुआत में मुझे लगा कि यह भी बाकी प्रोडक्ट्स जैसा होगा, लेकिन Health Veda ने मुझे गलत साबित कर दिया। बस 2 हफ्ते में मुझे अपनी एनर्जी और स्टैमिना में बहुत फर्क दिखा। अब मैं ऑफिस के बाद भी थका हुआ महसूस नहीं करता। यह वाकई में एक जादुई प्रोडक्ट है!"</p>
+                        <div class="verified-badge">✓ Verified Purchase • सत्यापित खरीद</div>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <img src="https://randomuser.me/api/portraits/men/36.jpg" alt="Amit Sharma" class="avatar-img">
+                    <div class="review-body">
+                        <h3 class="user-name">अमित शर्मा</h3>
+                        <span class="user-city">दिल्ली</span>
+                        <div class="stars">★★★★★</div>
+                        <p class="review-text">"मैंने बहुत सारे सप्लीमेंट्स ट्राई किए हैं, लेकिन ऐसा रिजल्ट कभी नहीं मिला। यह न केवल असरदार है बल्कि इसका कोई साइड इफेक्ट भी नहीं है। मेरी पत्नी भी बदलाव देखकर बहुत खुश है। Health Veda मेरी लाइफ का सबसे अच्छा इन्वेस्टमेंट है।"</p>
+                        <div class="verified-badge">✓ Verified Purchase • सत्यापित खरीद</div>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <img src="https://randomuser.me/api/portraits/men/54.jpg" alt="Pradeep Mishra" class="avatar-img">
+                    <div class="review-body">
+                        <h3 class="user-name">प्रदीप मिश्रा</h3>
+                        <span class="user-city">बैंगलोर</span>
+                        <div class="stars">★★★★★</div>
+                        <p class="review-text">"बैंगलोर की भागदौड़ भरी जिंदगी में स्ट्रेस बहुत था। Health Veda ने मुझे फिर से जवान महसूस कराया है। नेचुरल इंग्रीडिएंट्स होने की वजह से मैंने इसे चुना और मैं निराश नहीं हुआ। अब मैं जिम में भी ज्यादा वक्त बिता पाता हूं।"</p>
+                        <div class="verified-badge">✓ Verified Purchase • सत्यापित खरीद</div>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <img src="https://randomuser.me/api/portraits/men/42.jpg" alt="Vikas Yadav" class="avatar-img">
+                    <div class="review-body">
+                        <h3 class="user-name">विकास यादव</h3>
+                        <span class="user-city">जयपुर</span>
+                        <div class="stars">★★★★★</div>
+                        <p class="review-text">"एक महीने में मेरी ताकत और स्टैमिना दोनों बढ़ गए। पहले मैं सीढ़ियां चढ़ने में भी हांफ जाता था, लेकिन अब मैं पूरे दिन एक्टिव रहता हूं। मेरे दोस्तों ने भी मेरे अंदर आए बदलाव को नोटिस किया है। बहुत बहुत धन्यवाद!"</p>
+                        <div class="verified-badge">✓ Verified Purchase • सत्यापित खरीद</div>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <img src="https://randomuser.me/api/portraits/men/83.jpg" alt="Sanjay Patel" class="avatar-img">
+                    <div class="review-body">
+                        <h3 class="user-name">संजय पटेल</h3>
+                        <span class="user-city">अहमदाबाद</span>
+                        <div class="stars">★★★★★</div>
+                        <p class="review-text">"आयुर्वेदिक होने के कारण मुझे कोई टेंशन नहीं है। मैंने इसे अपने डॉक्टर से पूछकर शुरू किया था और उन्होंने भी इसे सुरक्षित बताया। 100% सेफ और इफेक्टिव है। अब मेरा कॉन्फिडेंस लेवल बहुत ऊपर है।"</p>
+                        <div class="verified-badge">✓ Verified Purchase • सत्यापित खरीद</div>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <img src="https://randomuser.me/api/portraits/men/61.jpg" alt="Manoj Singh" class="avatar-img">
+                    <div class="review-body">
+                        <h3 class="user-name">मनोज सिंह</h3>
+                        <span class="user-city">लखनऊ</span>
+                        <div class="stars">★★★★★</div>
+                        <p class="review-text">"मेरे दोस्त ने रिकमेंड किया था। पहले मैं हिचकिचा रहा था, लेकिन अब मैं खुद सबको बताता हूं। यह प्रोडक्ट पुरुषों की हेल्थ के लिए एक वरदान है। डिलीवरी भी बहुत फास्ट थी और पैकिंग भी बहुत अच्छी थी।"</p>
+                        <div class="verified-badge">✓ Verified Purchase • सत्यापित खरीद</div>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <img src="https://randomuser.me/api/portraits/men/28.jpg" alt="Arjun Rathore" class="avatar-img">
+                    <div class="review-body">
+                        <h3 class="user-name">अर्जुन राठौर</h3>
+                        <span class="user-city">कोलकाता</span>
+                        <div class="stars">★★★★★</div>
+                        <p class="review-text">"कैश ऑन डिलीवरी का ऑप्शन था इसलिए ट्राई किया। मुझे लगा अगर काम नहीं करेगा तो पैसे बर्बाद नहीं होंगे। लेकिन अब मैं हर महीने ऑर्डर करता हूं। यह प्रोडक्ट हर पैसे की वैल्यू देता है।"</p>
+                        <div class="verified-badge">✓ Verified Purchase • सत्यापित खरीद</div>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <img src="https://randomuser.me/api/portraits/men/14.jpg" alt="Rohit Verma" class="avatar-img">
+                    <div class="review-body">
+                        <h3 class="user-name">रोहित वर्मा</h3>
+                        <span class="user-city">पुणे</span>
+                        <div class="stars">★★★★★</div>
+                        <p class="review-text">"45 की उम्र में भी 25 जैसा फील करता हूं। Health Veda ने मेरी जिंदगी बदल दी। मेरी एनर्जी, मेरा मूड, सब कुछ बेहतर हो गया है। अब मैं अपने परिवार के साथ ज्यादा क्वालिटी टाइम बिता पाता हूं।"</p>
+                        <div class="verified-badge">✓ Verified Purchase • सत्यापित खरीद</div>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <img src="https://randomuser.me/api/portraits/men/9.jpg" alt="Deepak Gupta" class="avatar-img">
+                    <div class="review-body">
+                        <h3 class="user-name">दीपक गुप्ता</h3>
+                        <span class="user-city">चेन्नई</span>
+                        <div class="stars">★★★★★</div>
+                        <p class="review-text">"डॉक्टर ने भी कहा कि मेरी हेल्थ में सुधार हुआ है। ब्लड सर्कुलेशन बेहतर हुआ है और सुस्ती गायब हो गई है। थैंक्यू Health Veda, आपने मुझे एक नई जिंदगी दी है!"</p>
+                        <div class="verified-badge">✓ Verified Purchase • सत्यापित खरीद</div>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <img src="https://randomuser.me/api/portraits/men/34.jpg" alt="Sunil Rajput" class="avatar-img">
+                    <div class="review-body">
+                        <h3 class="user-name">सुनील राजपूत</h3>
+                        <span class="user-city">हैदराबाद</span>
+                        <div class="stars">★★★★★</div>
+                        <p class="review-text">"बहुत सारे प्रोडक्ट ट्राई किए लेकिन यही सबसे बेस्ट है। गारंटी से काम करता है। सबसे अच्छी बात यह है कि इसका असर लंबे समय तक रहता है, सिर्फ कुछ घंटों के लिए नहीं। मस्ट ट्राई!"</p>
+                        <div class="verified-badge">✓ Verified Purchase • सत्यापित खरीद</div>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <img src="https://randomuser.me/api/portraits/men/52.jpg" alt="Naveen Chaudhary" class="avatar-img">
+                    <div class="review-body">
+                        <h3 class="user-name">नवीन चौधरी</h3>
+                        <span class="user-city">इंदौर</span>
+                        <div class="stars">★★★★★</div>
+                        <p class="review-text">"पैकिंग बहुत अच्छी है और डिस्क्रीट है। कोई भी नहीं जान पाता कि अंदर क्या है। प्राइवेसी का पूरा ध्यान रखा गया है। और प्रोडक्ट का रिजल्ट तो लाजवाब है ही।"</p>
+                        <div class="verified-badge">✓ Verified Purchase • सत्यापित खरीद</div>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <img src="https://randomuser.me/api/portraits/men/46.jpg" alt="Rahul Tiwari" class="avatar-img">
+                    <div class="review-body">
+                        <h3 class="user-name">राहुल तिवारी</h3>
+                        <span class="user-city">भोपाल</span>
+                        <div class="stars">★★★★★</div>
+                        <p class="review-text">"मेरी वाइफ ने नोटिस किया कि मैं ज्यादा एनर्जेटिक हो गया हूं। हमारे रिश्ते में भी नई ताजगी आ गई है। यह सिर्फ एक कैप्सूल नहीं, बल्कि खुशहाल जिंदगी की चाबी है। धन्यवाद Health Veda!"</p>
+                        <div class="verified-badge">✓ Verified Purchase • सत्यापित खरीद</div>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <img src="https://randomuser.me/api/portraits/men/18.jpg" alt="Vijay Malhotra" class="avatar-img">
+                    <div class="review-body">
+                        <h3 class="user-name">विजय मालहोत्रा</h3>
+                        <span class="user-city">चंडीगढ़</span>
+                        <div class="stars">★★★★★</div>
+                        <p class="review-text">"3 बॉटल ऑर्डर की थी, सबसे बढ़िया डील मिली। फ्री शिपिंग भी मिला। कस्टमर सपोर्ट भी बहुत अच्छा है, उन्होंने मेरे सारे सवालों का जवाब दिया। प्रोडक्ट और सर्विस दोनों ए-वन हैं।"</p>
+                        <div class="verified-badge">✓ Verified Purchase • सत्यापित खरीद</div>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <img src="https://randomuser.me/api/portraits/men/64.jpg" alt="Anil Kapoor" class="avatar-img">
+                    <div class="review-body">
+                        <h3 class="user-name">अनिल कपूर</h3>
+                        <span class="user-city">सूरत</span>
+                        <div class="stars">★★★★★</div>
+                        <p class="review-text">"असली आयुर्वेदिक फॉर्मूला है। मैं एक्सपर्ट से चेक करवाया था। इसमें अश्वगंधा और शिलाजीत जैसी जड़ी-बूटियां असली हैं। 100% जेन्युइन प्रोडक्ट है। आंख बंद करके भरोसा कर सकते हैं।"</p>
+                        <div class="verified-badge">✓ Verified Purchase • सत्यापित खरीद</div>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Harish Joshi" class="avatar-img">
+                    <div class="review-body">
+                        <h3 class="user-name">हरीश जोशी</h3>
+                        <span class="user-city">नागपुर</span>
+                        <div class="stars">★★★★★</div>
+                        <p class="review-text">"50 की उम्र में भी मैं अपने बेटे के साथ क्रिकेट खेलता हूं। एनर्जी लेवल बहुत बढ़ गया है। पहले घुटनों में दर्द रहता था और थकान होती थी, अब मैं एकदम फिट महसूस करता हूं।"</p>
+                        <div class="verified-badge">✓ Verified Purchase • सत्यापित खरीद</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="sticky-footer">
+        <div class="footer-content">
+            <div class="timer">Offer expires in: <span id="countdown">05:00</span></div>
+            <a href="#contact-form" class="footer-btn">ORDER NOW</a>
+        </div>
+    </div>
+
+    <script src="custom.css"></script>
+</body>
+</html>
